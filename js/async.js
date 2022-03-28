@@ -4,32 +4,39 @@ const sendBtn = document.getElementById('send');
 
 sendBtn.addEventListener('click', sendBrandModel);
 
-function sendBrandModel() {
-  fetch(baseUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      brand: 'BMW',
-      model: 'X5',
-    }),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log('data', data);
-      getCars();
-    })
-    .catch((err) => console.log(err.message));
+async function sendBrandModel() {
+  try {
+    const res = await fetch(baseUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        brand: 'BMW',
+        model: 'X5',
+      }),
+    });
+    const data = await res.json();
+    console.log('data', data);
+
+    const carDataBeAsync = getCars();
+    console.log('carDataBeAsync ===', carDataBeAsync);
+    const carData = await getCars();
+    renderCars(carData);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function getCars() {
   try {
-    const res = await fetch(baseUrl + 'sdsd');
+    // throw 'Bla bla bla';
+    const res = await fetch(baseUrl);
     const data = await res.json();
     console.log('data', data);
+    return data;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 
   // fetch(baseUrl)
@@ -39,3 +46,5 @@ async function getCars() {
 }
 
 getCars();
+
+function renderCars(arr) {}
