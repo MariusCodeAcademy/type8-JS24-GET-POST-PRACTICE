@@ -23,11 +23,19 @@ function sendBrandModel() {
     .catch((err) => console.log(err.message));
 }
 
-function getCars() {
-  fetch(baseUrl)
-    .then((res) => res.json())
-    .then((data) => console.log('data', data))
-    .catch((err) => console.log(err.message));
+async function getCars() {
+  try {
+    const res = await fetch(baseUrl + 'sdsd');
+    const data = await res.json();
+    console.log('data', data);
+  } catch (error) {
+    console.log(error.message);
+  }
+
+  // fetch(baseUrl)
+  //   .then((res) => res.json())
+  //   .then((data) => console.log('data', data))
+  //   .catch((err) => console.log(err.message));
 }
 
 getCars();
